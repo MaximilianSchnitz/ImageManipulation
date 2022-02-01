@@ -8,6 +8,9 @@ namespace ImageManipulation
         Bitmap bmp;
         BitmapData bmpData;
 
+        public int Width { get => bmp.Width; }
+        public int Height { get => bmp.Height; }
+
         public MemoryImage(Image img)
         {
             bmp = (Bitmap) img.Clone();
@@ -36,15 +39,21 @@ namespace ImageManipulation
             byte* pixel = GetPixelPointer(x, y);
 
             pixel[3] = c.A;
-            pixel[2] = c.B;
+            pixel[2] = c.R;
             pixel[1] = c.G;
-            pixel[0] = c.R;
+            pixel[0] = c.B;
         }
 
         public Bitmap ToBitmap()
         {
             bmp.UnlockBits(bmpData);
             return bmp;
+        }
+
+        public void Dispose()
+        {
+            bmp.UnlockBits(bmpData);
+            bmp.Dispose();
         }
 
     }

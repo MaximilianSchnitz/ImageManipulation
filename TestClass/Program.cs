@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 
 namespace ImageManipulation
@@ -7,11 +8,12 @@ namespace ImageManipulation
     {
         public static void Main(string[] args)
         {
-            var bmp = new Bitmap("C:/Users/felix/desktop/img.jpg");
-            var img = new MemoryImage(bmp);
-
-            img.SetPixel(2700, 1700, Color.FromArgb(255, 200, 200, 200));
-            Console.WriteLine(img.GetPixel(2700, 1700));
+            var sw = new Stopwatch();
+            sw.Start();
+            var bmp = new Bitmap("C:/Users/felix/desktop/landscape.jpg");
+            ImageEffect.MultiThreadBoxBlur(bmp, 1, 100).Save("C:/Users/felix/desktop/MTBlur1.100.jpg");
+            sw.Stop();
+            Console.WriteLine(sw.ElapsedMilliseconds);
         }
     }
 }
